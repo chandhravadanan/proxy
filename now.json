@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "builds": [
+        { 
+            "src": "package.json", 
+            "use": "@now/next"
+        }
+    ],
+    "routes": [
+        { "src": "/main.js", "dest": "/static/main.js"},
+        { "src": "/sw.js", "dest": "/static/sw.js" }
+    ]	 
+}
