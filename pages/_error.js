@@ -24,6 +24,7 @@ Error.getInitialProps = ({ req, res, err }) => {
       let host = info.host
       let redirectUrl = 'https://proxy.now.sh/fetch?uri='+protocol+'//'+host+path
       console.log('redirected to '+ redirectUrl)
+      res.statusCode = 302
       res.writeHead(302, {Location: redirectUrl});
       res.end();
       return new Promise((req, res)=>{})
