@@ -13,7 +13,7 @@ Fetch.getInitialProps = (context) =>{
    
     let { protocol, host, uri }  = parseReq(query.uri)
     
-    parser.fetchAndParse(protocol, host, uri, (status, content, headers)=>{
+    parser.fetchAndParse(protocol, host, uri, req.headers, (status, content, headers)=>{
         res.staus = status
         res.headers = headers
         res.end(content)

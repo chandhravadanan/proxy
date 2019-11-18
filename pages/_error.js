@@ -29,7 +29,7 @@ Error.getInitialProps = ({ req, res, err }) => {
       //res.status = 302
       //res.writeHead(302, {Location: redirectUrl});
       //res.end();
-      parser.fetchAndParse(protocol, host, completeUrl, (status, content, headers)=>{
+      parser.fetchAndParse(protocol, host, completeUrl, req.headers, (status, content, headers)=>{
         res.staus = status
         res.headers = headers
         res.end(content)
