@@ -14,6 +14,12 @@ Fetch.getInitialProps = (context) =>{
    
     let { protocol, host, uri }  = parseReq(query.uri)
     
+    parser.fetchAndParse(protocol, host, uri, (status, content, headers)=>{
+        res.staus = status
+        res.headers = headers
+        res.end(content)
+    })
+    /*
     let options = {
         uri : uri,
         headers : {
@@ -30,12 +36,11 @@ Fetch.getInitialProps = (context) =>{
         if(body){
             body = urlparser.parseWebContent(protocol, host,  body) 
             res.headers = response.headers
-            //let cookieStr= 'proxy_domain='+ (protocol+'//'+host)
-            //res.setHeader("Set-Cookie", cookieStr);
             res.end(body)  
         }
         
     });
+    */
     return new Promise((req, res)=>{})
 }
 

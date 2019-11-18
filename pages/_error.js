@@ -1,5 +1,6 @@
 
 import React from 'react'
+import parser from '../lib/parser'
 var urlinfo = require('url')
 
 function Error({ statusCode }) {
@@ -22,11 +23,17 @@ Error.getInitialProps = ({ req, res, err }) => {
       let info = urlinfo.parse(actualUrl);
       let protocol = info.protocol
       let host = info.host
-      let redirectUrl = 'https://proxy.now.sh/fetch?uri='+protocol+'//'+host+path
+      let completeUrl = protocol+'//'+host+path
+      let redirectUrl = 'https://proxy.now.sh/fetch?uri='+completeUrl
       console.log('redirected to '+ redirectUrl)
-      res.statusCode = 302
-      res.writeHead(302, {Location: redirectUrl});
-      res.end();
+      //res.status = 302
+      //res.writeHead(302, {Location: redirectUrl});
+      //res.end();
+      parser.fetchAndParse(protocol, host, completeUrl, (status, content, headers)=>{
+        res.staus = status
+        res.headers = headers
+        res.end(content)
+      })
       return new Promise((req, res)=>{})
   }
   return {}
