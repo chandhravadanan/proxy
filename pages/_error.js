@@ -17,7 +17,9 @@ Error.getInitialProps = ({ req, res, err }) => {
   let referer = req.headers.referer;
   if(referer){
       console.log('referer ', referer)
-      let info = urlinfo.parse(referer);
+      let actualUrl = referer.split('?uri=')[1]
+      console.log('actual url ', actualUrl)
+      let info = urlinfo.parse(actualUrl);
       let protocol = info.protocol
       let host = info.host
       let redirectUrl = 'https://proxy.now.sh/fetch?uri='+protocol+'//'+host+path
