@@ -1,6 +1,5 @@
 
-import request from 'request';
-import urlparser from '../lib/parser';
+import parser from '../lib/parser';
 import urllib from 'url'
 
 const Fetch = (probs) =>{
