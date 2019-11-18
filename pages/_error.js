@@ -2,6 +2,7 @@
 import React from 'react'
 import parser from '../lib/parser'
 var urlinfo = require('url')
+import Router from 'next/router';
 
 function Redirect(props) {
   return (
@@ -18,7 +19,10 @@ Redirect.getInitialProps = ({ req, res, err }) => {
       Location: 'https://google.com'
     });
     res.end();
+  } else if (err && err.statusCode === 404) {
+    Router.push('https://google.com');
   }
+  return {};
   /*
   try{
     let path = req.url
