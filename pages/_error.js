@@ -14,6 +14,11 @@ function Error({ statusCode }) {
 }
 
 Error.getInitialProps = ({ req, res, err }) => {
+  res.status = 200 // changing the response code here
+  res.end('Works')
+  return new Promise((res, rej)=>{})
+
+  /*
   let path = req.url
   let referer = req.headers.referer;
   if(referer){
@@ -34,9 +39,11 @@ Error.getInitialProps = ({ req, res, err }) => {
         res.headers = headers
         res.end(content)
       })
+
       return new Promise((req, res)=>{})
   }
   return {}
+  */
 }
 
 export default Error
