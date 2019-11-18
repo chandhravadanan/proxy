@@ -16,11 +16,11 @@ Redirect.getInitialProps = ({ req, res, err }) => {
 
   if (res && res.statusCode === 404) {
     res.writeHead(302, {
-      Location: 'https://google.com'
+      Location: '/fetch?uri=https://google.com'
     });
     res.end();
   } else if (err && err.statusCode === 404) {
-    Router.push('https://google.com');
+    Router.push('/fetch?uri=https://google.com');
   }
   return {};
   /*
