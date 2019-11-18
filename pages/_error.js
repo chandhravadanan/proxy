@@ -16,6 +16,7 @@ Error.getInitialProps = ({ req, res, err }) => {
   let path = req.url
   let referer = req.headers.referer;
   if(referer){
+      console.log('referer ', referer)
       let info = urlinfo.parse(referer);
       let protocol = info.protocol
       let host = info.host
