@@ -11,11 +11,15 @@ const Fetch = (probs) =>{
 Fetch.getInitialProps = (context) =>{
     let { req, res, query} = context;
    
-    let { protocol, host, uri }  = parseReq(query.uri)
+    console.log('uri ', query.uri)
+    console.log('referer ', req.headers.referer)
+    let { protocol, host, uri }  = parseReq(req, query.uri)
     
     parser.fetchAndParse(protocol, host, uri, req.headers, (status, content, headers)=>{
         res.staus = status
-        res.headers = headers
+        //res.headers = headers
+        res.setHeader('content-type', headers['content-type'])
+        //console.log('headers ', res.headers)
         res.end(content)
     })
     /*
@@ -44,21 +48,29 @@ Fetch.getInitialProps = (context) =>{
 }
 
 
-function parseReq(uri){
+function parseReq(req, uri){
     let urlInfo = urllib.parse(uri)
 
     let protocol = urlInfo.protocol
     let host = urlInfo.host
 
-    return { protocol, host, uri }
-    /*
+    //return { protocol, host, uri }
+    
     if(protocol && host){
-        return {protocol, host, url}
+        return {protocol, host, uri}
     }
 
     try{
-        let cookies = req.headers.cookie
-        cookies = cookies.split('; ');
+        let referer = req.headers.referer
+        let actualUrl = referer.split('?uri=')[1]
+        let info = urllib.parse(actualUrl);
+        let protocol = info.protocol
+        let host = info.host
+        console.log('uri changed to '+ uri)
+        uri = protocol+'//'+host+ uri
+        console.log('new uri '+ uri)
+        return { protocol, host, uri}
+        /*cookies = cookies.split('; ');
         for (var i = 0; i < cookies.length; i++) {
             var cur = cookies[i].split('=');
             if(cur[0]==='proxy_domain'){
@@ -68,11 +80,10 @@ function parseReq(uri){
                 url = protocol+'//'+host+url
                 return { protocol, host, url};
             }
-        }
+        }*/
     }catch(e){
         console.log(e)
     }
     return {}
-    */
 }
 export default Fetch;
