@@ -1,6 +1,7 @@
 
 import parser from '../lib/parser';
 import urllib from 'url'
+import request from 'request'
 
 const Fetch = (probs) =>{
     return <div>
@@ -15,14 +16,15 @@ Fetch.getInitialProps = (context) =>{
     console.log('referer ', req.headers.referer)
     let { protocol, host, uri }  = parseReq(req, query.uri)
     
+    /*
     parser.fetchAndParse(protocol, host, uri, req.headers, (status, content, headers)=>{
         res.staus = status
         //res.headers = headers
         res.setHeader('content-type', headers['content-type'])
         //console.log('headers ', res.headers)
         res.end(content)
-    })
-    /*
+    })*/
+    
     let options = {
         uri : uri,
         headers : {
@@ -36,14 +38,19 @@ Fetch.getInitialProps = (context) =>{
             res.end('Ooops! something went wrong')
             return
         }
+        let contentType = response.headers['content-type']
+        if(contentType.indexOf('text/html')>0){
+            console.log(contentType)
+            response.pipe(res)
+            return
+        }
         if(body){
-            body = urlparser.parseWebContent(protocol, host,  body) 
+            body = parser.parseWebContent(protocol, host,  body) 
             res.headers = response.headers
             res.end(body)  
         }
-        
     });
-    */
+    
     return new Promise((req, res)=>{})
 }
 
